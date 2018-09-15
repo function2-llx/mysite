@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>搜索</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+	<script src="main.js"></script>
+</head>
+<body style="width: 40%; margin-left: 5%; margin-top: 2%">
+	<form action="/search/searchAction" method="GET">
+		<input type="text" name="content"
+		{% if searchFlag %}
+		value="{{content}}"
+		{% else %}
+		placeholder="输入搜索内容"
+		{% endif %}
+		style="width:400px;height: 30px;">
+		<input type="submit" value="搜索一下" style="height:30px">
+	</form>
+	{% if searchFlag %}
+	<div>
+		<p>
+			{{info}}
+		</p>
+	</div>
+	<div id="news">
+		{% for title, pubTime, body, url in newsInfos %}
+		<div>
+			<h3>
+				<a href="{{url}}">{{title}}</a>
+			</h3>
+			<div>
+				<span>{{pubTime}}</span>
+				{{body}}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="pagination">
+		<span class="step-links">
+			{% if page.has_previous %}
+				<a href="?pagenum={{ page.previous_page_number }}&content={{content}}">previous</a>
+			{% endif %}
+	
+			<span class="current">
+				Page {{ page.number }} of {{ page.paginator.num_pages }}.
+			</span>
+	
+			{% if page.has_next %}
+				<a href="?pagenum={{ page.next_page_number }}&content={{content}}">next</a>
+			{% endif %}
+		</span>
+	</div>
+	{% endif %}
+	<script>
+		
+	</script>
+</body>
+</html>
